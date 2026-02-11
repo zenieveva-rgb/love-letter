@@ -3,36 +3,57 @@ const yesBtn = document.getElementById("yesBtn");
 const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
+// Function to move the No button to a random spot within the screen
 function moveButton() {
-    noBtn.classList.add('moved'); // Add this line
-    // ... rest of your random X and Y logic ...
-}
-function moveButton() {
-    // 1. Get the actual size of the button
-    const btnRect = noBtn.getBoundingClientRect();
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
     
-    // 2. Define the available space (Viewport width/height)
-    // We subtract the button's size so it doesn't go off-screen
-    const maxX = window.innerWidth - btnRect.width;
-    const maxY = window.innerHeight - btnRect.height;
+    // Calculate available screen space
+    const maxX = window.innerWidth - btnWidth - 20;
+    const maxY = window.innerHeight - btnHeight - 20;
 
-    // 3. Generate random coordinates within that space
-    // We use a small 10px buffer so it doesn't touch the literal edge
-    const randomX = Math.max(10, Math.floor(Math.random() * (maxX - 10)));
-    const randomY = Math.max(10, Math.floor(Math.random() * (maxY - 10)));
+    // Generate random position inside the "Safe Zone"
+    const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+    const randomY = Math.max(10, Math.floor(Math.random() * maxY));
 
-    // 4. Apply the position
     noBtn.style.position = "fixed";
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
-    noBtn.style.margin = "0";
-    noBtn.style.transform = "none"; // Important: removes the CSS centering
+    noBtn.style.transform = "none"; // Stop centering once it starts moving
 }
 
-noBtn.addEventListener("click", (e) => {
-    e.preventDefault(); // Prevents zoom/scroll on some mobile browsers
-    moveButton();
+// Moves on click/tap
+noBtn.addEventListener("click", moveButton);
+
+function createConfetti() {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    const colors = ["#ff4d6d", "#ffd700", "#00ffcc", "#ff69b4", "#8a2be2"];
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
+    heart.innerHTML = "❤️"; 
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+}
+
+yesBtn.addEventListener("click", () => {
+    questionText.innerHTML = "I knew it! ❤️";
+    mainImage.style.display = "block"; 
+    noBtn.style.display = "none";
+    yesBtn.style.animation = "none";
+
+    // Launch hearts and confetti
+    for (let i = 0; i < 50; i++) {
+        setTimeout(createHeart, i * 100);
+        setTimeout(createConfetti, i * 50);
+    }
 });
-
-// The rest of your functions (createHeart, createConfetti, yesBtn listener) stay the same!
-
