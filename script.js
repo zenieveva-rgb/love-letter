@@ -3,53 +3,31 @@ const yesBtn = document.getElementById("yesBtn");
 const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
-// 1. Teleport No button to a random place on Click
 function moveButton() {
-    // Calculate safe random positions for mobile screens
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) + 20;
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) + 20;
+    // 1. Get the actual size of the button
+    const btnRect = noBtn.getBoundingClientRect();
+    
+    // 2. Define the available space (Viewport width/height)
+    // We subtract the button's size so it doesn't go off-screen
+    const maxX = window.innerWidth - btnRect.width;
+    const maxY = window.innerHeight - btnRect.height;
 
+    // 3. Generate random coordinates within that space
+    // We use a small 10px buffer so it doesn't touch the literal edge
+    const randomX = Math.max(10, Math.floor(Math.random() * (maxX - 10)));
+    const randomY = Math.max(10, Math.floor(Math.random() * (maxY - 10)));
+
+    // 4. Apply the position
     noBtn.style.position = "fixed";
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-    noBtn.style.transform = "none"; // Remove initial centering
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+    noBtn.style.margin = "0";
+    noBtn.style.transform = "none"; // Important: removes the CSS centering
 }
 
-noBtn.addEventListener("click", moveButton);
-
-// 2. Confetti Effect
-function createConfetti() {
-    const confetti = document.createElement("div");
-    confetti.classList.add("confetti");
-    const colors = ["#ff4d6d", "#ffd700", "#00ffcc", "#ff69b4", "#8a2be2"];
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.borderRadius = "2px";
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 3000);
-}
-
-// 3. Heart Effect
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("floating-heart");
-    heart.innerHTML = "❤️"; 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 20 + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 3000);
-}
-
-// 4. Yes button click
-yesBtn.addEventListener("click", () => {
-    questionText.innerHTML = "I knew it! ❤️";
-    mainImage.style.display = "block"; 
-    noBtn.style.display = "none"; // Hide No button only after Yes is clicked
-    yesBtn.style.animation = "none"; // Stop pulsing
-
-    // Start all animations
-    for (let i = 0; i < 50; i++) {
-        setTimeout(createHeart, i * 100);
-        setTimeout(createConfetti, i * 50);
-    }
+noBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevents zoom/scroll on some mobile browsers
+    moveButton();
 });
+
+// The rest of your functions (createHeart, createConfetti, yesBtn listener) stay the same!
