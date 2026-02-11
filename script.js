@@ -3,7 +3,7 @@ const yesBtn = document.getElementById("yesBtn");
 const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
-// Preload image to avoid delay
+// Preload image
 const imgPreload = new Image();
 imgPreload.src = "lyn.png";
 
@@ -22,27 +22,48 @@ function createHeart() {
     }, 5000);
 }
 
-// 2. Move No button **when clicked**
+// 2. Move No button on click
 function moveButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 30);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 30);
-    
-    // Smooth transition
-    noBtn.style.transition = "left 0.3s ease, top 0.3s ease";
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+    noBtn.style.transform = "none";
 }
-
-// CHANGE HERE: click event instead of mouseover
 noBtn.addEventListener("click", moveButton);
 
-// 3. Yes button click
+// 3. Confetti Animation
+function createConfetti() {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    const colors = ["#ff4d6d", "#ffd700", "#00ffcc", "#ff69b4", "#8a2be2"];
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.width = Math.random() * 8 + 5 + "px";
+    confetti.style.height = confetti.style.width;
+
+    // random animation duration
+    confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 3000);
+}
+
+// 4. Yes button click
 yesBtn.addEventListener("click", () => {
     questionText.innerHTML = "I knew it! ❤️";
     mainImage.style.display = "block"; 
     noBtn.style.display = "none";
 
+    // Hearts
     for (let i = 0; i < 50; i++) {
         setTimeout(createHeart, i * 100);
+    }
+
+    // Confetti
+    for (let i = 0; i < 100; i++) {
+        setTimeout(createConfetti, i * 50);
     }
 });
