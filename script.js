@@ -22,19 +22,19 @@ function createHeart() {
     }, 5000);
 }
 
-// 2. Move No button smoothly
+// 2. Move No button **when clicked**
 function moveButton() {
-    // Calculate random position within viewport
     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 30);
     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 30);
     
-    // Apply smooth transition
+    // Smooth transition
     noBtn.style.transition = "left 0.3s ease, top 0.3s ease";
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
 }
 
-noBtn.addEventListener("mouseover", moveButton);
+// CHANGE HERE: click event instead of mouseover
+noBtn.addEventListener("click", moveButton);
 
 // 3. Yes button click
 yesBtn.addEventListener("click", () => {
