@@ -4,6 +4,10 @@ const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
 function moveButton() {
+    noBtn.classList.add('moved'); // Add this line
+    // ... rest of your random X and Y logic ...
+}
+function moveButton() {
     // 1. Get the actual size of the button
     const btnRect = noBtn.getBoundingClientRect();
     
@@ -31,3 +35,4 @@ noBtn.addEventListener("click", (e) => {
 });
 
 // The rest of your functions (createHeart, createConfetti, yesBtn listener) stay the same!
+
