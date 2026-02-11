@@ -51,9 +51,10 @@ button {
 #noBtn { 
     background-color: #f8f9fa; 
     color: #d63384; 
-    position: fixed; 
-    bottom: 100px; 
-    right: 50px;
+    position: absolute; /* Use absolute so it can float anywhere inside viewport */
+    left: 50%; /* start roughly center */
+    top: 50%;
+    transform: translate(-50%, -50%); /* center initially */
 }
 
 .floating-heart {
