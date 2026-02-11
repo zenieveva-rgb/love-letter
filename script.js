@@ -3,74 +3,55 @@ const yesBtn = document.getElementById("yesBtn");
 const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
-// 1. Function to move the "No" button away
+/**
+ * 1. Move No button to a random position
+ * This function calculates a safe zone so the button 
+ * doesn't go off-screen or hide behind the edges.
+ */
 function moveButton() {
-    // Calculate random positions within the visible window
-    const padding = 20;
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
+    // We use 'fixed' to ensure it can move anywhere on the viewport
+    noBtn.style.position = "fixed";
 
-    noBtn.style.position = "fixed"; // Switch to fixed for global movement
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+    // Calculate max available width and height minus button size
+    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+    // Generate random coordinates
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    // Apply the new position
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+    
+    // Reset transform so it doesn't stay centered via the CSS translate
+    noBtn.style.transform = "none";
 }
 
-// Move on hover (makes it impossible to click)
-noBtn.addEventListener("mouseover", moveButton);
-// Also move on click just in case they manage to tap it on mobile
+// Trigger the move on click
 noBtn.addEventListener("click", moveButton);
 
-// 2. Confetti Creation
-function createConfetti() {
-    const confetti = document.createElement("div");
-    confetti.classList.add("confetti");
-    const colors = ["#ff4d6d", "#ffd700", "#00ffcc", "#ff69b4", "#8a2be2"];
-    
-    confetti.style.position = "fixed";
-    confetti.style.top = "-10px";
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.width = "10px";
-    confetti.style.height = "10px";
-    confetti.style.borderRadius = "2px";
-    confetti.style.zIndex = "100";
-    
-    // Add falling animation
-    const duration = Math.random() * 3 + 2;
-    confetti.animate([
-        { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-        { transform: `translateY(110vh) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-    ], {
-        duration: duration * 1000,
-        easing: 'linear'
-    });
+// OPTIONAL: Keep the hover effect if you want it to be extra hard to catch
+// noBtn.addEventListener("mouseover", moveButton);
 
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), duration * 1000);
-}
 
-// 3. Heart Creation
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("floating-heart");
-    heart.innerHTML = ["❤️", "💖", "💝", "💕"][Math.floor(Math.random() * 4)]; 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 20 + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 4000);
-}
-
-// 4. Success State
+/**
+ * 2. Yes button click (The Final Goal)
+ */
 yesBtn.addEventListener("click", () => {
-    questionText.innerHTML = "I knew it! ❤️<br><span style='font-size: 18px;'>You're stuck with me now!</span>";
+    questionText.innerHTML = "I knew it! ❤️";
     mainImage.style.display = "block"; 
+    
+    // Hide the No button only AFTER they give up and click Yes
     noBtn.style.display = "none";
-    yesBtn.style.transform = "scale(1.2)";
-    yesBtn.style.animation = "none"; // Stop pulsing after click
 
-    // Trigger mass effects
-    for (let i = 0; i < 75; i++) {
-        setTimeout(createHeart, i * 150);
-        setTimeout(createConfetti, i * 100);
+    // Trigger Effects
+    for (let i = 0; i < 50; i++) {
+        setTimeout(createHeart, i * 100);
+    }
+    for (let i = 0; i < 100; i++) {
+        setTimeout(createConfetti, i * 50);
     }
 });
+
+// Reuse your existing createHeart and createConfetti functions below...
