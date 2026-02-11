@@ -51,9 +51,10 @@ button {
 #noBtn { 
     background-color: #f8f9fa; 
     color: #d63384; 
-    position: fixed; 
-    bottom: 100px; 
-    right: 50px;
+    position: absolute; /* floating anywhere */
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .floating-heart {
@@ -63,7 +64,23 @@ button {
     animation: heartFloat 3s linear forwards;
 }
 
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: red; /* color changes dynamically in JS */
+    top: 0;
+    opacity: 1;
+    pointer-events: none;
+    animation: confettiFall linear forwards;
+}
+
 @keyframes heartFloat {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
