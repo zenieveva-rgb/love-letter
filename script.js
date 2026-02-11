@@ -3,24 +3,24 @@ const yesBtn = document.getElementById("yesBtn");
 const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
-// 1. Make the 'No' button run away
-noBtn.addEventListener("mouseover", () => {
-    // Calculate random coordinates within the screen
-    const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-    const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+function moveButton() {
+    const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - 30));
+    const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - 30));
 
-    // Move the button to those coordinates
     noBtn.style.position = "fixed"; 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveButton);
+
+noBtn.addEventListener("click", (e) => {
+    e.preventDefault(); 
+    moveButton();
 });
 
-// 2. What happens when they click 'Yes'
 yesBtn.addEventListener("click", () => {
     questionText.innerHTML = "I knew it! ❤️";
-    // Swap image to a celebratory one
-    mainImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZueGZu&ep=v1_gifs_search&rid=giphy.gif"; 
-    
-    // Hide the No button
+    mainImage.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1JnByb2Nlc3M9Z2lmX3NlYXJjaCZyaWQ9Z2lwaHkuZ2lm/v4lKqLoT6N_v1K/giphy.gif"; 
     noBtn.style.display = "none";
 });
