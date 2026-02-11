@@ -51,8 +51,8 @@ button {
 #noBtn { 
     background-color: #f8f9fa; 
     color: #d63384; 
-    position: fixed; /* Changed from absolute to fixed for smooth movement */
-    bottom: 100px; /* starting position */
+    position: fixed; 
+    bottom: 100px; 
     right: 50px;
 }
 
