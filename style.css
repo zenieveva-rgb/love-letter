@@ -74,3 +74,14 @@ button {
     z-index: 9999;
     animation: heartFloat 3s linear forwards;
 }
+
+#display-image {
+    display: none; /* Stays hidden until the 'Yes' click */
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    /* This ensures the image centers nicely */
+    margin-left: auto;
+    margin-right: auto;
+}
