@@ -1,87 +1,52 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #ffe4e1; /* Soft Pink */
-    font-family: 'Arial', sans-serif;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const questionText = document.getElementById("question-text");
+const mainImage = document.getElementById("display-image");
+
+// Function for the Floating Hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
+    heart.innerHTML = "❤️"; 
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+    document.body.appendChild(heart);
+    
+    setTimeout(() => { 
+        heart.remove(); 
+    }, 5000);
 }
 
-.container {
-    text-align: center;
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    width: 350px;
-    position: relative;
+// Function to make the No button run away
+function moveButton(e) {
+    if (e) {
+        e.preventDefault();
+    }
+    const x = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth - 30));
+    const y = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight - 30));
+    
+    noBtn.style.position = "fixed"; 
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 }
 
-img {
-    width: 200px;
-    border-radius: 15px;
-}
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
 
-h1 {
-    color: #d63384;
-    font-size: 24px;
-    margin: 20px 0;
-}
+// Action when YES is clicked
+yesBtn.addEventListener("click", () => {
+    questionText.innerHTML = "I knew it! ❤️";
+    
+    // Show the image and set the source to your file
+    mainImage.style.display = "block"; 
+    mainImage.src = "lyn.png"; 
+    
+    // Hide the No button
+    noBtn.style.display = "none";
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-button {
-    padding: 10px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-#yesBtn {
-    background-color: #ff69b4;
-    color: white;
-}
-
-#noBtn {
-    background-color: #f8f9fa;
-    color: #d63384;
-    position: absolute; /* Crucial for the movement */
-}
-
-#yesBtn:hover {
-    transform: scale(1.1);
-}
-@keyframes heartFloat {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
-}
-
-.floating-heart {
-    position: fixed;
-    bottom: -50px;
-    color: #ff4d6d;
-    font-size: 24px;
-    user-select: none;
-    pointer-events: none;
-    z-index: 9999;
-    animation: heartFloat 3s linear forwards;
-}
-
-#display-image {
-    display: none; /* Stays hidden until the 'Yes' click */
-    width: 100%;
-    max-width: 300px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    /* This ensures the image centers nicely */
-    margin-left: auto;
-    margin-right: auto;
-}
+    // Launch the hearts
+    for (let i = 0; i < 50; i++) {
+        setTimeout(createHeart, i * 100);
+    }
+});
