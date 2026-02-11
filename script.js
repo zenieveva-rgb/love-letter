@@ -3,55 +3,55 @@ const yesBtn = document.getElementById("yesBtn");
 const questionText = document.getElementById("question-text");
 const mainImage = document.getElementById("display-image");
 
-/**
- * 1. Move No button to a random position
- * This function calculates a safe zone so the button 
- * doesn't go off-screen or hide behind the edges.
- */
+// 1. Teleport No button to a random place
 function moveButton() {
-    // We use 'fixed' to ensure it can move anywhere on the viewport
+    // Get screen dimensions
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    // Calculate random position (staying 10% away from edges for mobile)
+    const randomX = Math.floor(Math.random() * (screenWidth - 100));
+    const randomY = Math.floor(Math.random() * (screenHeight - 50));
+
     noBtn.style.position = "fixed";
-
-    // Calculate max available width and height minus button size
-    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
-    // Generate random coordinates
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
-
-    // Apply the new position
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
-    
-    // Reset transform so it doesn't stay centered via the CSS translate
-    noBtn.style.transform = "none";
+    noBtn.style.margin = "0"; // Reset any CSS margins
 }
 
-// Trigger the move on click
 noBtn.addEventListener("click", moveButton);
 
-// OPTIONAL: Keep the hover effect if you want it to be extra hard to catch
-// noBtn.addEventListener("mouseover", moveButton);
+// 2. Confetti Effect
+function createConfetti() {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    const colors = ["#ff4d6d", "#ffd700", "#00ffcc", "#ff69b4", "#8a2be2"];
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+}
 
+// 3. Heart Effect
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
+    heart.innerHTML = "❤️"; 
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+}
 
-/**
- * 2. Yes button click (The Final Goal)
- */
+// 4. Yes button click
 yesBtn.addEventListener("click", () => {
     questionText.innerHTML = "I knew it! ❤️";
     mainImage.style.display = "block"; 
-    
-    // Hide the No button only AFTER they give up and click Yes
-    noBtn.style.display = "none";
+    noBtn.style.display = "none"; // Hide No button only at the very end
 
-    // Trigger Effects
+    // Start Animations
     for (let i = 0; i < 50; i++) {
         setTimeout(createHeart, i * 100);
-    }
-    for (let i = 0; i < 100; i++) {
         setTimeout(createConfetti, i * 50);
     }
 });
-
-// Reuse your existing createHeart and createConfetti functions below...
