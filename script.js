@@ -40,7 +40,7 @@ yesBtn.addEventListener("click", () => {
     mainImage.style.display = "block"; 
     // Bagong working link (Cute Milk & Mocha Bear)
     mainImage.src = // UPDATED LINE
-    mainImage.src = "down.webp";
+    mainImage.src = "lyn.jpg";
     noBtn.style.display = "none";
 
     // Simulan ang floating hearts
@@ -48,4 +48,5 @@ yesBtn.addEventListener("click", () => {
         setTimeout(createHeart, i * 100);
     }
 });
+
 
