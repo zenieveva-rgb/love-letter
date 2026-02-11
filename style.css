@@ -48,7 +48,13 @@ button {
 }
 
 #yesBtn { background-color: #ff69b4; color: white; }
-#noBtn { background-color: #f8f9fa; color: #d63384; position: absolute; }
+#noBtn { 
+    background-color: #f8f9fa; 
+    color: #d63384; 
+    position: fixed; /* Changed from absolute to fixed for smooth movement */
+    bottom: 100px; /* starting position */
+    right: 50px;
+}
 
 .floating-heart {
     position: fixed;
