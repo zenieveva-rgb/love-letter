@@ -1,33 +1,154 @@
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const questionText = document.getElementById("question-text");
-const mainImage = document.getElementById("display-image");
-
-function moveButton() {
-    // 1. Get the actual size of the button
-    const btnRect = noBtn.getBoundingClientRect();
-    
-    // 2. Define the available space (Viewport width/height)
-    // We subtract the button's size so it doesn't go off-screen
-    const maxX = window.innerWidth - btnRect.width;
-    const maxY = window.innerHeight - btnRect.height;
-
-    // 3. Generate random coordinates within that space
-    // We use a small 10px buffer so it doesn't touch the literal edge
-    const randomX = Math.max(10, Math.floor(Math.random() * (maxX - 10)));
-    const randomY = Math.max(10, Math.floor(Math.random() * (maxY - 10)));
-
-    // 4. Apply the position
-    noBtn.style.position = "fixed";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
-    noBtn.style.margin = "0";
-    noBtn.style.transform = "none"; // Important: removes the CSS centering
+/* 1. Global Reset & Mobile Optimization */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-noBtn.addEventListener("click", (e) => {
-    e.preventDefault(); // Prevents zoom/scroll on some mobile browsers
-    moveButton();
-});
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    /* Animated Gradient Background */
+    background: linear-gradient(-45deg, #ffe4e1, #ffb6c1, #e6e6fa, #fff0f5);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Prevents scrolling when button moves */
+    touch-action: manipulation; /* Improves mobile tap response */
+}
 
-// The rest of your functions (createHeart, createConfetti, yesBtn listener) stay the same!
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. Main Container */
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 30px 20px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(214, 51, 132, 0.15);
+    width: 85%;
+    max-width: 380px;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    z-index: 10;
+    position: relative;
+}
+
+/* 3. Image and Text */
+#display-image {
+    display: none; /* Hidden until Yes is clicked */
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    border-radius: 20px;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    /* Springy Pop-in Effect */
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+    color: #d63384;
+    font-size: 26px;
+    margin-bottom: 25px;
+    line-height: 1.2;
+}
+
+/* 4. Button Styling */
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    min-height: 60px;
+}
+
+button {
+    padding: 12px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    -webkit-tap-highlight-color: transparent; /* Removes blue flash on mobile */
+}
+
+#yesBtn {
+    background-color: #ff69b4;
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+    animation: pulse 1.8s infinite;
+    z-index: 11;
+}
+
+#noBtn {
+    background-color: #f8f9fa;
+    color: #d63384;
+    border: 1px solid #ffb6c1;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+    position: absolute; /* Needed for random movement */
+    left: 50%;
+    top: 75%;
+    transform: translateX(-50%);
+    /* Smooth transition for the "jump" */
+    transition: left 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+                top 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 12;
+    white-space: nowrap;
+}
+
+/* 5. Keyframe Animations */
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+    70% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+}
+
+/* Particle Effects (Hearts & Confetti) */
+.floating-heart {
+    position: fixed;
+    bottom: -50px;
+    pointer-events: none;
+    z-index: 5;
+    animation: heartFloat 4s linear forwards;
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -15px;
+    pointer-events: none;
+    z-index: 5;
+    animation: confettiFall 3.5s linear forwards;
+}
+
+@keyframes heartFloat {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* 6. Fix for when button moves (Stops it from being centered) */
+.moved {
+    transform: none !important;
+    margin: 0 !important;
+}
