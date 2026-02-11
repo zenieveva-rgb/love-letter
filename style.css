@@ -1,118 +1,33 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    /* Animated Gradient Background */
-    background: linear-gradient(-45deg, #ffe4e1, #ffb6c1, #e6e6fa, #fff0f5);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const questionText = document.getElementById("question-text");
+const mainImage = document.getElementById("display-image");
+
+function moveButton() {
+    // 1. Get the actual size of the button
+    const btnRect = noBtn.getBoundingClientRect();
+    
+    // 2. Define the available space (Viewport width/height)
+    // We subtract the button's size so it doesn't go off-screen
+    const maxX = window.innerWidth - btnRect.width;
+    const maxY = window.innerHeight - btnRect.height;
+
+    // 3. Generate random coordinates within that space
+    // We use a small 10px buffer so it doesn't touch the literal edge
+    const randomX = Math.max(10, Math.floor(Math.random() * (maxX - 10)));
+    const randomY = Math.max(10, Math.floor(Math.random() * (maxY - 10)));
+
+    // 4. Apply the position
+    noBtn.style.position = "fixed";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+    noBtn.style.margin = "0";
+    noBtn.style.transform = "none"; // Important: removes the CSS centering
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+noBtn.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevents zoom/scroll on some mobile browsers
+    moveButton();
+});
 
-.container {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    width: 85%;
-    max-width: 350px;
-    backdrop-filter: blur(5px);
-    z-index: 10;
-}
-
-#display-image {
-    display: none; 
-    width: 100%;
-    max-width: 200px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    /* Pop-in animation */
-    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popIn {
-    0% { transform: scale(0); }
-    100% { transform: scale(1); }
-}
-
-h1 {
-    color: #d63384;
-    font-size: 24px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-button {
-    padding: 12px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#yesBtn { 
-    background-color: #ff69b4; 
-    color: white; 
-    animation: pulse 1.5s infinite;
-}
-
-#noBtn { 
-    background-color: #f8f9fa; 
-    color: #d63384; 
-    position: absolute;
-    left: 50%;
-    top: 65%;
-    transform: translateX(-50%);
-    transition: all 0.2s ease; /* Smooth "teleport" effect */
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    70% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-/* Floating Effects */
-.floating-heart {
-    position: fixed;
-    bottom: -50px;
-    pointer-events: none;
-    animation: heartFloat 3s linear forwards;
-    z-index: 1;
-}
-
-.confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    top: -10px;
-    pointer-events: none;
-    animation: confettiFall 3s linear forwards;
-    z-index: 1;
-}
-
-@keyframes heartFloat {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-110vh); opacity: 0; }
-}
-
-@keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
+// The rest of your functions (createHeart, createConfetti, yesBtn listener) stay the same!
