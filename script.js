@@ -39,8 +39,8 @@ yesBtn.addEventListener("click", () => {
     // IPAPAKITA NA ANG IMAGE
     mainImage.style.display = "block"; 
     // Bagong working link (Cute Milk & Mocha Bear)
-    mainImage.src = "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1eXp1JnByb2Nlc3M9Z2lmX3NlYXJjaCZyaWQ9Z2lwaHkuZ2lm/v4lKqLoT6N_v1K/giphy.gif"; 
-    
+    mainImage.src = // UPDATED LINE
+    mainImage.src = "down.webp";
     noBtn.style.display = "none";
 
     // Simulan ang floating hearts
@@ -48,3 +48,4 @@ yesBtn.addEventListener("click", () => {
         setTimeout(createHeart, i * 100);
     }
 });
+
