@@ -4,7 +4,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #ffe4e1; /* Soft Pink Background */
+    background-color: #ffe4e1;
     font-family: 'Arial', sans-serif;
     overflow: hidden;
 }
@@ -19,17 +19,14 @@ body {
 }
 
 #display-image {
-    display: none; /* Hidden at first */
+    display: none;
     width: 100%;
     max-width: 250px;
     border-radius: 15px;
     margin-bottom: 20px;
 }
 
-h1 {
-    color: #d63384;
-    font-size: 24px;
-}
+h1 { color: #d63384; font-size: 24px; }
 
 .buttons {
     display: flex;
@@ -51,10 +48,10 @@ button {
 #noBtn { 
     background-color: #f8f9fa; 
     color: #d63384; 
-    position: absolute; /* Use absolute so it can float anywhere inside viewport */
-    left: 50%; /* start roughly center */
+    position: absolute;
+    left: 50%; 
     top: 50%;
-    transform: translate(-50%, -50%); /* center initially */
+    transform: translate(-50%, -50%);
 }
 
 .floating-heart {
@@ -64,7 +61,51 @@ button {
     animation: heartFloat 3s linear forwards;
 }
 
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    top: 0;
+    opacity: 1;
+    pointer-events: none;
+    animation: confettiFall linear forwards;
+}
+
+.firework {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fireworkBurst 0.8s linear forwards;
+}
+
+.floating-text {
+    position: fixed;
+    font-size: 18px;
+    color: #ff69b4;
+    font-weight: bold;
+    pointer-events: none;
+    animation: textFloat 2s linear forwards;
+}
+
 @keyframes heartFloat {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes fireworkBurst {
+    0% { transform: translate(0,0) scale(1); opacity: 1; }
+    100% { transform: translate(calc(var(--dx)*1px), calc(var(--dy)*1px)) scale(0); opacity: 0; }
+}
+
+@keyframes textFloat {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-200px); opacity: 0; }
 }
