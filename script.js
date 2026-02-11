@@ -22,18 +22,17 @@ function createHeart() {
     }, 5000);
 }
 
-// 2. Move No button **when clicked**
+// 2. Move No button **to random position on click**
 function moveButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 30);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 30);
-    
-    // Smooth transition
-    noBtn.style.transition = "left 0.3s ease, top 0.3s ease";
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+    noBtn.style.transform = "none"; // remove initial translate so it moves naturally
 }
 
-// CHANGE HERE: click event instead of mouseover
+// **CLICK event** for No button
 noBtn.addEventListener("click", moveButton);
 
 // 3. Yes button click
