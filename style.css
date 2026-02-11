@@ -82,10 +82,13 @@ button {
 #noBtn { 
     background-color: #f8f9fa; 
     color: #d63384; 
-    position: absolute;
-    transition: all 0.2s ease;
+    position: absolute; /* Default starting position */
+    left: 50%; 
+    top: 60%; /* Adjusted slightly lower than the Yes button */
+    transform: translateX(-50%);
+    transition: all 0.15s ease-out; /* Makes the "teleport" look like a quick slide */
+    z-index: 1000;
 }
-
 /* Animations */
 @keyframes pulse {
     0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
@@ -105,3 +108,4 @@ button {
     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
+
