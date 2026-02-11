@@ -4,108 +4,86 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    /* Animated Gradient Background */
-    background: linear-gradient(-45deg, #ffe4e1, #ffb6c1, #e6e6fa, #fff0f5);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    font-family: 'Poppins', 'Arial', sans-serif;
-    overflow: hidden;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    background-color: #ffe4e1;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Prevents scrolling when button moves */
 }
 
 .container {
     text-align: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(214, 51, 132, 0.2);
-    width: 350px;
-    backdrop-filter: blur(5px);
-    border: 2px solid white;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 85%; /* Better for mobile */
+    max-width: 350px;
+    position: relative;
     z-index: 10;
 }
 
 #display-image {
-    display: none;
+    display: none; 
     width: 100%;
-    max-width: 250px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popIn {
-    0% { transform: scale(0); }
-    100% { transform: scale(1); }
+    max-width: 200px;
+    border-radius: 15px;
+    margin: 0 auto 20px auto;
 }
 
 h1 {
     color: #d63384;
-    font-size: 28px;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    font-size: 22px;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
+    margin-top: 20px;
+    min-height: 50px;
 }
 
 button {
-    padding: 12px 30px;
-    font-size: 20px;
-    font-weight: bold;
+    padding: 10px 25px;
+    font-size: 18px;
     border: none;
-    border-radius: 50px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
 }
 
-#yesBtn { 
-    background-color: #ff69b4; 
-    color: white; 
-    animation: pulse 1.5s infinite;
-}
-
-#yesBtn:hover {
-    transform: scale(1.1);
-    background-color: #ff1493;
-}
+#yesBtn { background-color: #ff69b4; color: white; position: relative; z-index: 11; }
 
 #noBtn { 
     background-color: #f8f9fa; 
     color: #d63384; 
-    position: absolute; /* Default starting position */
-    left: 50%; 
-    top: 60%; /* Adjusted slightly lower than the Yes button */
-    transform: translateX(-50%);
-    transition: all 0.15s ease-out; /* Makes the "teleport" look like a quick slide */
-    z-index: 1000;
-}
-/* Animations */
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
-    70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 105, 180, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+    position: absolute; /* Changed to absolute for easier mobile control */
+    transition: 0.1s ease;
+    z-index: 12;
 }
 
+/* Animations */
 .floating-heart {
     position: fixed;
     bottom: -50px;
     pointer-events: none;
-    z-index: 1;
-    animation: heartFloat 4s linear forwards;
+    animation: heartFloat 3s linear forwards;
 }
 
 @keyframes heartFloat {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
 }
 
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    top: -10px;
+    pointer-events: none;
+    animation: confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
